@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Print Point Printing Press - Professional Printing Services</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #0066cc;
+            --secondary-color: #ff6600;
+            --dark-color: #333;
+            --light-color: #f8f9fa;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .bg-primary-custom {
+            background-color: var(--primary-color) !important;
+        }
+        
+        .text-primary-custom {
+            color: var(--primary-color) !important;
+        }
+        
+        .btn-primary-custom {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+        
+        .btn-primary-custom:hover {
+            background-color: #0055aa;
+            border-color: #004499;
+        }
+        
+        .hero-section {
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://media.licdn.com/dms/image/v2/D4D12AQH-kv6-RErwww/article-cover_image-shrink_600_2000/article-cover_image-shrink_600_2000/0/1698261029212?e=2147483647&v=beta&t=J061kPQP1VnGNb_7BTx_31Ipy4Y6GSWgYOKM0qz2FcM');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 100px 0;
+        }
+        
+        .service-card {
+            transition: transform 0.3s;
+            border: none;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .service-icon {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+        
+        .testimonial-card {
+            border-left: 4px solid var(--primary-color);
+        }
+        
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+        }
+        
+        .social-icon {
+            color: white;
+            font-size: 1.5rem;
+            margin-right: 15px;
+        }
+        
+        .social-icon:hover {
+            color: var(--secondary-color);
+        }
+
+        /* Loading spinner */
+        .spinner {
+            display: none;
+            width: 40px;
+            height: 40px;
+            margin: 0 auto;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid var(--primary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Toast notification */
+        .toast-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1100;
+        }
+
+        /* Back to top button */
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            display: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+            color: white;
+            text-align: center;
+            line-height: 50px;
+            font-size: 20px;
+            z-index: 1000;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .back-to-top:hover {
+            background-color: var(--secondary-color);
+        }
+    </style>
+</head>
+<body>
+    <!-- Toast Notification Container -->
+    <div class="toast-container"></div>
+
+    <!-- Back to Top Button -->
+    <div class="back-to-top" id="backToTop">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <!-- Top Bar -->
+    <div class="bg-dark text-white py-2 d-none d-md-block">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <i class="fas fa-envelope me-2"></i> info@printpoint.com
+                    <i class="fas fa-phone ms-3 me-2"></i> <p class="d-inline">+234 703 933 0868  &nbsp;| +234 703 889 6566</p>
+                </div>
+                <div class="col-md-6 text-end">
+                    <a href="#" class="text-white me-3"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="text-white me-3"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="text-white me-3"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="text-white"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <img class="rounded" src="images/print-point-logo3.png" alt="">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#services">Services</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about">About Us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#portfolio">All Products</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">Contact</a>
+                    </li>
+                </ul>
+                <a href="#quote" class="btn btn-primary-custom text-white ms-lg-3">Get a Quote</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section text-center">
+        <div class="container">
+            <h1 class="display-4 fw-bold mb-4">Professional Printing Services in Owerri</h1>
+            <p class="lead mb-5">High-quality printing solutions for businesses, organizations, and individuals</p>
+            <div class="d-flex justify-content-center gap-3">
+                <a href="#services" class="btn btn-primary btn-lg px-4">Our Services</a>
+                <a href="#contact" class="btn btn-outline-light btn-lg px-4">Contact Us</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-5 bg-light">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="fw-bold">Our Printing Services</h2>
+                <p class="text-muted">We offer a wide range of professional printing services</p>
+            </div>
+            <div class="row g-4" id="servicesContainer">
+                <!-- Services will be loaded via JavaScript -->
+                <div class="spinner" id="servicesSpinner"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-5">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6 mb-4 mb-lg-0">
+                    <img src="https://images.unsplash.com/photo-1603302576837-37561b2e2302?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Print Point Team" class="img-fluid rounded shadow">
+                </div>
+                <div class="col-lg-6">
+                    <h2 class="fw-bold mb-4">About Print Point Printing Press</h2>
+                    <p>Print Point is a leading printing company in Owerri Imo state, Nigeria, dedicated to providing high-quality printing services to businesses, organizations, and individuals.</p>
+                    <p>With over 10 years of experience in the printing industry, we have built a reputation for excellence, reliability, and customer satisfaction.</p>
+                    <p>Our state-of-the-art printing equipment and skilled professionals ensure that every project meets the highest standards of quality.</p>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><i class="fas fa-check text-primary me-2"></i> Modern printing technology</li>
+                        <li class="mb-2"><i class="fas fa-check text-primary me-2"></i> Experienced professionals</li>
+                        <li class="mb-2"><i class="fas fa-check text-primary me-2"></i> Fast turnaround times</li>
+                        <li class="mb-2"><i class="fas fa-check text-primary me-2"></i> Competitive pricing</li>
+                        <li class="mb-2"><i class="fas fa-check text-primary me-2"></i> Excellent customer service</li>
+                    </ul>
+                    <a href="#contact" class="btn btn-primary-custom mt-3 text-white">Learn More About Us</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section id="portfolio" class="py-5 bg-light">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="fw-bold">All Products, At a Glance</h2>
+                <p class="text-muted">A few images illustrate our range of services</p>
+            </div>
+            <div class="row g-3" id="portfolioContainer">
+                <!-- Portfolio items will be loaded via JavaScript -->
+                <div class="spinner" id="portfolioSpinner"></div>
+            </div>
+            <div class="text-center mt-4">
+                <button id="loadMoreBtn" class="btn btn-outline-primary w-50">See More</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="py-5">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="fw-bold">What Our Clients Say</h2>
+                <p class="text-muted">Testimonials from satisfied customers</p>
+            </div>
+            <div class="row g-4" id="testimonialsContainer">
+                <!-- Testimonials will be loaded via JavaScript -->
+                <div class="spinner" id="testimonialsSpinner"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quote Section -->
+    <section id="quote" class="py-5 bg-primary-custom text-white">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-8 mb-4 mb-lg-0">
+                    <h2 class="fw-bold mb-3">Ready to Start Your Printing Project?</h2>
+                    <p class="lead mb-0">Get a free quote today and let's bring your ideas to life with our professional printing services.</p>
+                </div>
+                <div class="col-lg-4 text-lg-end">
+                    <a href="#contact" class="btn btn-light btn-lg px-4">Request a Quote</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-5">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="fw-bold">Contact Us</h2>
+                <p class="text-muted">Get in touch with our team</p>
+            </div>
+            <div class="row g-4">
+                <div class="col-lg-6">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body p-4">
+                            <h4 class="card-title mb-4">Send Us a Message</h4>
+                            <form id="contactForm">
+                                <div class="mb-3">
+                                    <label for="name" class="form-label">Your Name</label>
+                                    <input type="text" class="form-control" id="name" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="email" class="form-label">Email Address</label>
+                                    <input type="email" class="form-control" id="email" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="phone" class="form-label">Phone Number</label>
+                                    <input type="tel" class="form-control" id="phone">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="service" class="form-label">Service Interested In</label>
+                                    <select class="form-select" id="service">
+                                        <option value="" selected disabled>Select a service</option>
+                                        <option>Book Printing</option>
+                                        <option>Business Stationery</option>
+                                        <option>Large Format Printing</option>
+                                        <option>Direct Image Printing</option>
+                                        <option>Calendar Printing</option>
+                                        <option>Branded Merchandise</option>
+                                        <option>Packaging Printing</option>
+                                        <option>Other</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="message" class="form-label">Your Message</label>
+                                    <textarea class="form-control" id="message" rows="4" required></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-primary-custom text-white" id="submitBtn">
+                                    <span id="submitText">Send Message</span>
+                                    <span class="spinner-border spinner-border-sm d-none" id="submitSpinner" role="status" aria-hidden="true"></span>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body p-4">
+                            <h4 class="card-title mb-4">Contact Information</h4>
+                            <div class="mb-4">
+                                <h5><i class="fas fa-map-marker-alt text-primary me-3"></i> Our Location</h5>
+                                <p class="ms-5 ps-3">18/20 Ihugba Street, Owerri, Imo State, Nigeria</p>
+                            </div>
+                            <div class="mb-4">
+                                <h5><i class="fas fa-phone-alt text-primary me-3"></i> Phone Numbers</h5>
+                                <p class="ms-5 ps-3">+234 703 933 0868<br>+234 703 889 6566</p>
+                            </div>
+                            <div class="mb-4">
+                                <h5><i class="fas fa-envelope text-primary me-3"></i> Email Address</h5>
+                                <p class="ms-5 ps-3">info@printpoint.com<br>sales@printpoint.com</p>
+                            </div>
+                            <div class="mb-4">
+                                <h5><i class="fas fa-clock text-primary me-3"></i> Working Hours</h5>
+                                <p class="ms-5 ps-3">Monday - Friday: 8:00 AM - 6:00 PM<br>Saturday: 9:00 AM - 4:00 PM</p>
+                            </div>
+                            <div class="mt-5">
+                                <h5 class="mb-3">Follow Us</h5>
+                                <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                                <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                                <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                                <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-5">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-lg-4">
+                    <h4 class="text-white mb-4">Print Point</h4>
+                    <p>Professional printing services in Owerri, delivering quality and excellence for over 10 years.</p>
+                    <div class="mt-4">
+                        <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-6">
+                    <h5 class="text-white mb-4">Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#" class="text-white text-decoration-none">Home</a></li>
+                        <li class="mb-2"><a href="#services" class="text-white text-decoration-none">Services</a></li>
+                        <li class="mb-2"><a href="#about" class="text-white text-decoration-none">About Us</a></li>
+                        <li class="mb-2"><a href="#portfolio" class="text-white text-decoration-none">Portfolio</a></li>
+                        <li class="mb-2"><a href="#contact" class="text-white text-decoration-none">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <h5 class="text-white mb-4">Our Services</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#" class="text-white text-decoration-none">Book Printing</a></li>
+                        <li class="mb-2"><a href="#" class="text-white text-decoration-none">Business Stationery</a></li>
+                        <li class="mb-2"><a href="#" class="text-white text-decoration-none">Large Format Printing</a></li>
+                        <li class="mb-2"><a href="#" class="text-white text-decoration-none">Branded Merchandise</a></li>
+                        <li class="mb-2"><a href="#" class="text-white text-decoration-none">Packaging Printing</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3">
+                    <h5 class="text-white mb-4">Newsletter</h5>
+                    <p>Subscribe to our newsletter for updates and special offers.</p>
+                    <form id="newsletterForm">
+                        <div class="input-group mb-3">
+                            <input type="email" class="form-control" id="newsletterEmail" placeholder="Your Email" required>
+                            <button class="btn btn-primary-custom" type="submit">Subscribe</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <hr class="my-4 bg-secondary">
+            <div class="row">
+                <div class="col-md-6 text-center text-md-start">
+                    <p class="mb-0">&copy; <span id="currentYear"></span> Print Point Printing Press. All rights reserved.</p>
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    <p class="mb-0">Designed by Print Point Team</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Custom JavaScript -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set current year in footer
+            document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        targetElement.scrollIntoView({
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+
+            // Back to top button functionality
+            const backToTopButton = document.getElementById('backToTop');
+            window.addEventListener('scroll', function() {
+                if (window.pageYOffset > 300) {
+                    backToTopButton.style.display = 'block';
+                } else {
+                    backToTopButton.style.display = 'none';
+                }
+            });
+            
+            backToTopButton.addEventListener('click', function() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+
+            // Load services dynamically
+            const servicesContainer = document.getElementById('servicesContainer');
+            const servicesSpinner = document.getElementById('servicesSpinner');
+            
+            servicesSpinner.style.display = 'block';
+            
+            // Simulate API call with setTimeout
+            setTimeout(function() {
+                const services = [
+                    {
+                        icon: 'fas fa-file-invoice',
+                        title: 'Business Stationery',
+                        description: 'Professional business cards, letterheads, envelopes, and other corporate stationery.',
+                        link: '#'
+                    },
+                    {
+                        icon: 'fas fa-brush',
+                        title: 'Large Format Printing',
+                        description: 'Flex Banners, SAV stickers, Reflectives and other large format printing for your event/marketing needs.',
+                        link: '#'
+                    },
+                    {
+                        icon: 'fas fa-book',
+                        title: 'Direct Image Printing',
+                        description: 'Card, Posters, Flyers, and other direct image printing for your event/marketing needs.',
+                        link: '#'
+                    },
+                    {
+                        icon: 'fas fa-calendar-alt',
+                        title: 'Calendar Printing',
+                        description: 'Custom calendar printing for corporate gifts, promotions, and personal use.',
+                        link: '#'
+                    },
+                    {
+                        icon: 'fas fa-tshirt',
+                        title: 'Branded Merchandise',
+                        description: 'Custom branded t-shirts, mugs, pens, and other promotional items.',
+                        link: '#'
+                    },
+                    {
+                        icon: 'fas fa-box-open',
+                        title: 'Packaging Printing',
+                        description: 'Custom packaging solutions for products, gifts, and retail items.',
+                        link: '#'
+                    }
+                ];
+                
+                let servicesHTML = '';
+                services.forEach(service => {
+                    servicesHTML += `
+                        <div class="col-md-4">
+                            <div class="card service-card h-100">
+                                <div class="card-body text-center p-4">
+                                    <div class="service-icon">
+                                        <i class="${service.icon}"></i>
+                                    </div>
+                                    <h4 class="card-title">${service.title}</h4>
+                                    <p class="card-text">${service.description}</p>
+                                    <a href="${service.link}" class="btn btn-outline-primary">Learn More</a>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
+                
+                servicesContainer.innerHTML = servicesHTML;
+                servicesSpinner.style.display = 'none';
+            }, 1000);
+
+            // Load portfolio items dynamically
+            const portfolioContainer = document.getElementById('portfolioContainer');
+            const portfolioSpinner = document.getElementById('portfolioSpinner');
+            const loadMoreBtn = document.getElementById('loadMoreBtn');
+            let portfolioItems = [];
+            let visibleItems = 3;
+            
+            portfolioSpinner.style.display = 'block';
+            
+            // Simulate API call with setTimeout
+            setTimeout(function() {
+                portfolioItems = [
+                    {
+                        image: 'https://www.tenaui.sa/wp-content/uploads/2024/02/Large-Format-Printing.webp',
+                        category: 'Books'
+                    },
+                    {
+                        image: 'https://pzielng.com/assets/products/product-company-event-music-artist-concert-show-party-indoor-and-outdoor-roll-up-banner-design-and-printing-in-lagos-abuja-nigeria..JPG',
+                        alt: 'Business Cards',
+                        category: 'Stationery'
+                    },
+                    {
+                        image: 'https://premierprinters.co.in/wp-content/uploads/2023/09/Best-3-A4-Size-Flyer-Mockup-PSD-Free-Download-2.webp',
+                        alt: 'Packaging',
+                        category: 'Packaging'
+                    },
+
+                    {
+                        image: 'https://s3-media0.fl.yelpcdn.com/bphoto/MKzLqqozeEcOJkBQZIONug/1000s.jpg',
+                        alt: 'Brochures',
+                        category: 'Marketing'
+                    },
+                    {
+                        image: 'https://gogoads.com.my/gogoads/wp-content/uploads/2021/07/johor-presentation-folder-art-card-printing-1200x1200.jpg',
+                        alt: 'Flyers',
+                        category: 'Marketing'
+                    },
+                    {
+                        image: 'https://www.delhiprinter.com/images/flyer-printing.jpg',
+                        category: 'Stationery'
+                    },
+
+                    {
+                        image: 'https://customany.com/wp-content/uploads/2023/10/What-is-DTF-printing-Direct-to-Film-Printing-and-How-does-it-work.jpg',
+                        alt: 'Banners',
+                        category: 'Large Format'
+                    },
+                    {
+                        image: 'https://www.agceducation.com/wp-content/uploads/2023/09/shutterstock_1619486323.jpg',
+                        alt: 'Branded T-shirts',
+                        category: 'Merchandise'
+                    },
+                    {
+                        image: 'https://www.printinlondon.co.uk/wp-content/uploads/2024/12/DTF-printing-London.jpg',
+                        alt: 'Calendars',
+                        category: 'Calendars'
+                    },
+
+                    {
+                        image: 'https://www.brildor.com/blog/wp-content/uploads/2023/05/cabecera-post-dos-1024x581.jpg',
+                        alt: 'Brochures',
+                        category: 'Marketing'
+                    },
+                    {
+                        image: 'https://www.printomizeamerica.com/cdn/shop/files/5_color_rolls.png?v=1743191875',
+                        alt: 'Notebooks',
+                        category: 'Stationery'
+                    },
+                    {
+                        image: 'https://dcdn-us.mitiendanube.com/stores/001/151/484/products/8d72f8ce67aa69954df94140d9e33dac-afbfd0e171e6a944de17212359241891-640-0.jpg',
+                        alt: 'Flyers',
+                        category: 'Marketing'
+                    },
+
+                    {
+                        image: 'https://www.dtflinko.com/wp-content/uploads/2024/09/t504_uv_dtf_printer.webp',
+                        alt: 'Brochures',
+                        category: 'Marketing'
+                    },
+                    {
+                        image: 'https://sc04.alicdn.com/kf/H8df6e7c8e73c444f8565f07339164634n/200568036/H8df6e7c8e73c444f8565f07339164634n.jpg',
+                        alt: 'Flyers',
+                        category: 'Marketing'
+                    },
+                    {
+                        image: 'https://s.alicdn.com/@sc04/kf/Hf243d84c118c49ffa1301d9dd21e4623J.jpg',
+                        category: 'Stationery'
+                    },
+
+                    {
+                        image: 'https://www.eloquentprints.com/wp-content/uploads/2020/01/16_printing_the_identy_of_los_angeles_cover.jpg',
+                        alt: 'Brochures',
+                        category: 'Marketing'
+                    },
+                    {
+                        image: 'https://gogoads.com.my/gogoads/wp-content/uploads/2021/07/johor-presentation-folder-art-card-printing-1200x1200.jpg',
+                        alt: 'Flyers',
+                        category: 'Marketing'
+                    },
+                    {
+                        image: 'https:https://app.kiakiaprint.com/storage/gallery/flyers-handbills-mobile-banner-kiakia-print_1599497756.jpg',
+                        category: 'Stationery'
+                    }
+                ];
+                
+                displayPortfolioItems();
+                portfolioSpinner.style.display = 'none';
+                
+                // Show/hide load more button based on items
+                if (visibleItems >= portfolioItems.length) {
+                    loadMoreBtn.style.display = 'none';
+                }
+            }, 1500);
+            
+            function displayPortfolioItems() {
+                let portfolioHTML = '';
+                const itemsToShow = portfolioItems.slice(0, visibleItems);
+                
+                itemsToShow.forEach(item => {
+                    portfolioHTML += `
+                        <div class="col-md-4">
+                            <div class="portfolio-item">
+                                <img src="${item.image}" alt="${item.alt}" class="img-fluid rounded shadow-sm">
+                                <div class="portfolio-overlay d-flex align-items-center justify-content-center">
+                                    <div class="text-center text-white p-3">
+                                        <h5>${item.alt}</h5>
+                                        <small>${item.category}</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
+                
+                portfolioContainer.innerHTML = portfolioHTML;
+            }
+            
+            loadMoreBtn.addEventListener('click', function() {
+                visibleItems += 3;
+                displayPortfolioItems();
+                
+                if (visibleItems >= portfolioItems.length) {
+                    loadMoreBtn.style.display = 'none';
+                }
+            });
+
+            // Load testimonials dynamically
+            const testimonialsContainer = document.getElementById('testimonialsContainer');
+            const testimonialsSpinner = document.getElementById('testimonialsSpinner');
+            
+            testimonialsSpinner.style.display = 'block';
+            
+            // Simulate API call with setTimeout
+            setTimeout(function() {
+                const testimonials = [
+                    {
+                        stars: 5,
+                        text: '"The best place in Owerri to print. Always cheap, affordable and accessible."',
+                        image: 'https://lh3.googleusercontent.com/a-/ALV-UjXwKOcevWtiWkovspmjB3_Cgk478DvE2fSkFmXApgywrW8I8OlF=w72-h72-p-rp-mo-ba3-br100',
+                        name: 'BOB-EMMANUEL UDECHUKWU IBEABUCHI',
+                        position: 'A digital media specialist.'
+                    },
+                    {
+                        stars: 5,
+                        text: '"Excellent in your work, very clean printing, customer relation 100%',
+                        image: 'https://lh3.googleusercontent.com/a/ACg8ocKaa5fBhOcU9JuYO1fdbT7hQKBz7BvLFbtzhPm2dZqav_0tSw=w72-h72-p-rp-mo-br100',
+                        name: 'Susan oyibo Okoro',
+                        position: 'Graphics Designer.'
+                    },
+                    {
+                        stars: 4.5,
+                        text: '"Nice job done, good customer service. Keep it up and we love to enjoy more of your promos."',
+                        image: 'https://lh3.googleusercontent.com/a/ACg8ocI9X7VlW2YUdtm3to7mN92GHCZ_4p9jP1MPqmU17KXWMPq2FA=w72-h72-p-rp-mo-br100',
+                        name: 'Eberechukwu Ndubuisi',
+                        position: 'Author'
+                    }
+                ];
+                
+                let testimonialsHTML = '';
+                testimonials.forEach(testimonial => {
+                    let starsHTML = '';
+                    const fullStars = Math.floor(testimonial.stars);
+                    const hasHalfStar = testimonial.stars % 1 !== 0;
+                    
+                    for (let i = 0; i < fullStars; i++) {
+                        starsHTML += '<i class="fas fa-star"></i>';
+                    }
+                    
+                    if (hasHalfStar) {
+                        starsHTML += '<i class="fas fa-star-half-alt"></i>';
+                    }
+                    
+                    for (let i = 0; i < 5 - Math.ceil(testimonial.stars); i++) {
+                        starsHTML += '<i class="far fa-star"></i>';
+                    }
+                    
+                    testimonialsHTML += `
+                        <div class="col-md-4">
+                            <div class="card h-100 testmonial-card">
+                                <div class="card-body p-4">
+                                    <div class="mb-3 text-warning">
+                                        ${starsHTML}
+                                    </div>
+                                    <p class="card-text">${testimonial.text}</p>
+                                    <div class="d-flex align-items-center mt-4">
+                                        <img src="${testimonial.image}" alt="Client" class="rounded-circle me-3" width="50">
+                                        <div>
+                                            <h6 class="mb-0">${testimonial.name}</h6>
+                                            <small class="text-muted">${testimonial.position}</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
+                
+                testimonialsContainer.innerHTML = testimonialsHTML;
+                testimonialsSpinner.style.display = 'none';
+            }, 1200);
+
+            // Contact form submission
+            const contactForm = document.getElementById('contactForm');
+            const submitBtn = document.getElementById('submitBtn');
+            const submitText = document.getElementById('submitText');
+            const submitSpinner = document.getElementById('submitSpinner');
+            
+            contactForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Show loading state
+                submitText.textContent = 'Sending...';
+                submitSpinner.classList.remove('d-none');
+                submitBtn.disabled = true;
+                
+                // Simulate form submission
+                setTimeout(function() {
+                    // Hide loading state
+                    submitText.textContent = 'Message Sent';
+                    submitSpinner.classList.add('d-none');
+                    
+                    // Show success toast
+                    showToast('Your message has been sent successfully!', 'success');
+                    
+                    // Reset form
+                    contactForm.reset();
+                    
+                    // Reset button after 3 seconds
+                    setTimeout(function() {
+                        submitText.textContent = 'Send Message';
+                        submitBtn.disabled = false;
+                    }, 3000);
+                }, 2000);
+            });
+
+            // Newsletter form submission
+            const newsletterForm = document.getElementById('newsletterForm');
+            
+            newsletterForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const email = document.getElementById('newsletterEmail').value;
+                
+                // Simulate subscription
+                setTimeout(function() {
+                    showToast('Thank you for subscribing to our newsletter!', 'success');
+                    newsletterForm.reset();
+                }, 1000);
+            });
+
+            // Toast notification function
+            function showToast(message, type) {
+                const toastContainer = document.querySelector('.toast-container');
+                const toast = document.createElement('div');
+                
+                toast.className = `toast show align-items-center text-white bg-${type}`;
+                toast.setAttribute('role', 'alert');
+                toast.setAttribute('aria-live', 'assertive');
+                toast.setAttribute('aria-atomic', 'true');
+                
+                toast.innerHTML = `
+                    <div class="d-flex">
+                        <div class="toast-body">
+                            ${message}
+                        </div>
+                        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                    </div>
+                `;
+                
+                toastContainer.appendChild(toast);
+                
+                // Auto remove toast after 5 seconds
+                setTimeout(function() {
+                    toast.remove();
+                }, 5000);
+                
+                // Close button functionality
+                toast.querySelector('button').addEventListener('click', function() {
+                    toast.remove();
+                });
+            }
+
+            // Initialize Bootstrap tooltips
+            const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+            tooltipTriggerList.map(function (tooltipTriggerEl) {
+                return new bootstrap.Tooltip(tooltipTriggerEl);
+            });
+        });
+    </script>
+</body>
+</html>
